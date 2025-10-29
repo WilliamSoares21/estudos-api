@@ -19,6 +19,13 @@ public class EnderecoDTO {
   private String ddd;
   private String siafi;
 
+  @JsonProperty("erro")
+  private boolean erro;
+
+  public boolean isErro() {
+    return erro;
+  }
+
   public EnderecoDTO() {
   }
 
@@ -34,6 +41,7 @@ public class EnderecoDTO {
     this.gia = gia;
     this.ddd = ddd;
     this.siafi = siafi;
+
   }
 
   public String getCep() {
@@ -126,5 +134,9 @@ public class EnderecoDTO {
         "  Bairro: " + bairro + "\n" +
         "  Localidade/UF: " + localidade + "/" + uf + "\n" +
         "  Complemento: " + comp;
+  }
+
+  public void setErro(boolean erro) {
+    this.erro = erro;
   }
 }
