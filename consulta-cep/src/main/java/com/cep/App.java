@@ -17,21 +17,36 @@ public class App {
     System.out.println("Insira o cep desejado:");
     String cep = scan.nextLine();
 
-    System.out.println(fazerRequisicao(cep));
+    EnderecoDTO endereco = fazerRequisicao(cep);
+
+    if (endereco != null) {
+      System.out.println(endereco);
+    } else {
+      System.out.println("Não foi possível encontrar o CEP ou houve um erro na requisição.");
+    }
+
     scan.close();
   }
 
-  public static String lerJson(HttpResponse<String> response) throws IOException {
+  // NOVO TIPO: O método agora retorna o objeto de domínio tipado (EnderecoDTO)
+  public static EnderecoDTO lerJson(HttpResponse<String> response) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     String json = response.body();
+    // DESSERIALIZAÇÃO TIPADA: O Jackson mapeia diretamente o JSON para a classe
+    // EnderecoDTO.
+    EnderecoDTO endereco = mapper.readValue(json, EnderecoDTO.class);
 
-    JsonNode node = mapper.readTree(json);
+    if (endereco.getCep() == null || endereco.getCep().isEmpty()) {
+      System.out.println("CEP não encontrado.");
+      return null;
+    }
 
-    return "teste cep:" + node;
+    return endereco;
 
   }
 
-  public static String fazerRequisicao(String cep) throws IOException, InterruptedException {
+  // NOVO TIPO: Assinatura atualizada para retornar EnderecoDTO.
+  public static EnderecoDTO fazerRequisicao(String cep) throws IOException, InterruptedException {
     String url = "https://viacep.com.br/ws/" + cep + "/json/";
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
@@ -39,7 +54,11 @@ public class App {
         .build();
     HttpResponse<String> response = client
         .send(request, HttpResponse.BodyHandlers.ofString());
-    return lerJson(response);
+    if (response.statusCode() != 200) {
+      System.out.println("Erro na requisição HTTP: Status " + response.statusCode());
+      return null;
+    }
 
+    return lerJson(response);
   }
 }
