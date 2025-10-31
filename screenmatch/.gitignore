@@ -1,0 +1,5 @@
+# Variáveis de ambiente com secrets
+.env
+
+# Propriedades com chaves reais
+application.properties
