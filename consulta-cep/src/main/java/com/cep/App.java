@@ -6,14 +6,13 @@ import java.util.Scanner;
 public class App {
   public static void main(String[] args) throws IOException, InterruptedException {
 
-    CepService consultarCep = new CepService();
     Scanner scan = new Scanner(System.in);
     System.out.println("Seja bem vindo ao verifica CEP");
     System.out.println("Insira o cep desejado:");
     String cep = scan.nextLine();
 
     try {
-      EnderecoDTO endereco = consultarCep.fazerRequisicao(cep);
+      EnderecoDTO endereco = CepService.fazerRequisicao(cep);
       System.out.println(endereco);
     } catch (CepNotFoundException e) {
       System.out.println("Erro de busca, o CEP " + cep + " não foi encontrado.");

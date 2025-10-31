@@ -39,5 +39,4 @@ class CepService {
 
     return lerJson(response);
   }
-  // This class can be expanded in the future to include more functionalities
 }
