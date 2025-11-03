@@ -1,8 +1,6 @@
 package com.screenmatch.calculos;
 
 import com.screenmatch.modelos.Titulo;
-import com.screenmatch.modelos.Serie;
-import com.screenmatch.modelos.Filme;
 
 public class CalculadoraDeTempo {
   private int tempoTotal;
