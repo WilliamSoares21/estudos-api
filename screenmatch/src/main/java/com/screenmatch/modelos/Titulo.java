@@ -27,6 +27,10 @@ public class Titulo implements Comparable<Titulo> {
 
   public Titulo(TituloOmdb meuTituloOmdb) {
     this.nome = meuTituloOmdb.Title();
+    if (meuTituloOmdb.Year().length() > 4) {
+      throw new ErroDeConversaoDeAnoExeption("Não consegui converter o ano informado");
+    }
+
     this.anoDeLancamento = Integer.valueOf(meuTituloOmdb.Year());
     this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.Runtime().replace(" min", ""));
   }

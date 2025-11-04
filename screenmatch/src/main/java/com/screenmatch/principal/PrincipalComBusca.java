@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
+import java.util.Locale.IsoCountryCode;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -26,29 +27,39 @@ public class PrincipalComBusca {
       System.err.println("ERRO: Defina a variável de ambiente OMDB_API_KEY");
       System.exit(1);
     }
+    try {
+      String url = "https://www.omdbapi.com/?t=" + tituloDoFilme + "&apikey=" + apiKey;
+      String endereco = url.replace(" ", "+");
+      String nomeFormatado = endereco;
+      HttpClient client = HttpClient.newHttpClient();
+      HttpRequest request = HttpRequest.newBuilder()
+          .uri(URI.create(nomeFormatado))
+          .build();
+      HttpResponse<String> response = client
+          .send(request, HttpResponse.BodyHandlers.ofString());
 
-    String endereco = "https://www.omdbapi.com/?t=" + tituloDoFilme + "&apikey=" + apiKey;
+      String json = response.body();
+      /* System.out.println(json); */
 
-    HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(endereco))
-        .build();
-    HttpResponse<String> response = client
-        .send(request, HttpResponse.BodyHandlers.ofString());
+      Gson gson = new GsonBuilder()
+          .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+          .create();
 
-    String json = response.body();
-    /* System.out.println(json); */
+      TituloOmdb meuTituloOmdb = gson.fromJson(json, TituloOmdb.class);
+      System.out.println("Titulo antes da Formatação");
+      System.out.println(meuTituloOmdb);
+      System.out.println("\n");
 
-    Gson gson = new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-        .create();
+      Titulo meuTitulo = new Titulo(meuTituloOmdb);
+      System.out.println("Titulo Após a Formatação");
+      System.out.println(meuTitulo);
+      System.out.println("\n");
 
-    TituloOmdb meuTituloOmdb = gson.fromJson(json, TituloOmdb.class);
-
-    Titulo meuTitulo = new Titulo(meuTituloOmdb);
-    System.out.println(meuTitulo);
-
+    } catch (NumberFormatException e) {
+      System.out.println("Ocorreu um erro");
+      System.out.println(e.getMessage());
+    }
+    System.out.println("Programa encerrado");
     scan.close();
   }
-
 }

@@ -3,7 +3,6 @@ package com.screenmatch.principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 
 import com.screenmatch.modelos.Filme;
 import com.screenmatch.modelos.Serie;
