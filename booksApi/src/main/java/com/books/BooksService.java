@@ -11,7 +11,7 @@ import com.google.gson.GsonBuilder;
 
 public class BooksService {
 
-  public static VolumeInfo lerJson(HttpResponse<String> response) throws IOException {
+  public static VolumeInfo lerJson(HttpResponse<String> response) throws IOException, LivroNaoAchadoException {
     Gson gson = new GsonBuilder().create();
 
     GoogleBooksResponse responseData = gson.fromJson(response.body(), GoogleBooksResponse.class);
@@ -20,11 +20,12 @@ public class BooksService {
       BookItem firBookItem = responseData.getItems().get(0);
       return firBookItem.getVolumeInfo();
     } else {
-      throw new IOException("Nenhum livro encontrado");
+      throw new LivroNaoAchadoException();
     }
   }
 
-  public static VolumeInfo fazerRequisicao(String livro) throws IOException, InterruptedException {
+  public static VolumeInfo fazerRequisicao(String livro)
+      throws IOException, InterruptedException, LivroNaoAchadoException {
     String nomeLivroFormatado = livro.replace(" ", "+");
     String url = "https://www.googleapis.com/books/v1/volumes?q=" + nomeLivroFormatado;
     HttpClient client = HttpClient.newHttpClient();
