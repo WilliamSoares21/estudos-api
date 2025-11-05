@@ -6,7 +6,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
-import java.util.Locale.IsoCountryCode;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -46,7 +45,13 @@ public class PrincipalComBusca {
           .create();
 
       TituloOmdb meuTituloOmdb = gson.fromJson(json, TituloOmdb.class);
-      System.out.println("Titulo antes da Formatação");
+
+      if(meuTituloOmdb.Title() == null || meuTituloOmdb.Title().isEmpty()){
+        System.out.println("O filme "+meuTituloOmdb+" não foi encontrado na base de dados");
+        return;
+      }
+
+      System.out.println("\nTitulo antes da Formatação");
       System.out.println(meuTituloOmdb);
       System.out.println("\n");
 
@@ -58,6 +63,9 @@ public class PrincipalComBusca {
     } catch (NumberFormatException e) {
       System.out.println("Ocorreu um erro");
       System.out.println(e.getMessage());
+    } catch (Exception e) {
+      System.out.println("Um erro inesperado ocorreu: "+e.getMessage());
+
     }
     System.out.println("Programa encerrado");
     scan.close();

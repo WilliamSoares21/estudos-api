@@ -27,12 +27,24 @@ public class Titulo implements Comparable<Titulo> {
 
   public Titulo(TituloOmdb meuTituloOmdb) {
     this.nome = meuTituloOmdb.Title();
-    if (meuTituloOmdb.Year().length() > 4) {
-      throw new ErroDeConversaoDeAnoExeption("Não consegui converter o ano informado");
+
+    String ano = meuTituloOmdb.Year();
+    if (ano.length() > 4) {
+      ano = ano.substring(0, 4);
     }
 
-    this.anoDeLancamento = Integer.valueOf(meuTituloOmdb.Year());
-    this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.Runtime().replace(" min", ""));
+    try {
+      this.anoDeLancamento = Integer.valueOf(ano);
+    } catch (NumberFormatException e) {
+      throw new ErroDeConversaoDeAnoExeption(
+          "Não consegui converter o ano informado para um número inteiro: " + ano);
+    }
+    try {
+      this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.Runtime().replace(" min", "").trim());
+    } catch (NumberFormatException e) {
+      System.err.println("Aviso: Não foi possível converter a duração para número. Definindo como 0.\n");
+      this.duracaoEmMinutos = 0;
+    }
   }
 
   public String getNome() {
