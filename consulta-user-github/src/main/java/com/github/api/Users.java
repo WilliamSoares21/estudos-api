@@ -60,8 +60,26 @@ public class Users {
 
   @Override
   public String toString() {
-    return "Users [login=" + login + ", url=" + url + ", name=" + name + ", bio=" + bio + ", dataCriacao=" + dataCriacao
-        + "]";
+    StringBuilder sb = new StringBuilder();
+    sb.append("\n=== GitHub User ===\n");
+    sb.append(String.format("%-12s: %s\n", "Login", login));
+    sb.append(String.format("%-12s: %s\n", "URL", url));
+    sb.append(String.format("%-12s: %s\n", "Name", name != null ? name : "-"));
+    sb.append(String.format("%-12s: %s\n", "Created At", dataCriacao != null ? dataCriacao : "-"));
+    sb.append(String.format("%-12s: ", "Bio"));
+
+    if (bio != null && !bio.isBlank()) {
+      int wrap = 60;
+      for (int i = 0; i < bio.length(); i += wrap) {
+        int end = Math.min(i + wrap, bio.length());
+        sb.append(bio, i, end).append("\n");
+        if (end < bio.length())
+          sb.append(" ".repeat(15));
+      }
+    } else {
+      sb.append("-\n");
+    }
+    return sb.toString();
   }
 
 }

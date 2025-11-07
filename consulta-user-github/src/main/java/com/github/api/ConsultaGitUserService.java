@@ -27,6 +27,10 @@ public class ConsultaGitUserService {
         .build();
     HttpResponse<String> response = client
         .send(request, HttpResponse.BodyHandlers.ofString());
+
+    if (response.statusCode() == 404) {
+      throw new ErroConsultaGitHubException("Usuário " + user + " não foi encontrado no GitHub");
+    }
     return lerJson(response);
   }
 }
