@@ -99,11 +99,11 @@ public class Titulo implements Comparable<Titulo> {
 
   @Override
   public String toString() {
-    return String.format(
-        "Título: %s\nAno de Lançamento: %d\nDuração: %d minutos",
-        this.nome,
-        this.anoDeLancamento,
-        this.duracaoEmMinutos);
+    return new StringBuilder()
+        .append("Título: ").append(nome).append(System.lineSeparator())
+        .append("Ano de Lançamento: ").append(anoDeLancamento).append(System.lineSeparator())
+        .append("Duração: ").append(duracaoEmMinutos).append(" minutos")
+        .toString();
   }
 
   @Override
