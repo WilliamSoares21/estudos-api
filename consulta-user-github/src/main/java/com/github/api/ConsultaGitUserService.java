@@ -19,17 +19,31 @@ public class ConsultaGitUserService {
     return usersData;
   }
 
-  public static Users fazerRequisicao(String user) throws IOException, InterruptedException {
+  public static Users fazerRequisicao(String user) {
     String url = "https://api.github.com/users/" + user;
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(url))
         .build();
-    HttpResponse<String> response = client
-        .send(request, HttpResponse.BodyHandlers.ofString());
 
-    if (response.statusCode() == 404) {
+    HttpResponse<String> response;
+
+    try {
+      response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    } catch (IOException e) {
+      throw new ErroRequisicaoException("Falha de conexão ou leitura de dados: " + e.getMessage());
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ErroRequisicaoException("A requisição foi interrompida: " + e.getMessage());
+    }
+
+    int statusCode = response.statusCode();
+
+    if (statusCode == 404) {
       throw new ErroConsultaGitHubException("Usuário " + user + " não foi encontrado no GitHub");
+    } else if (statusCode >= 400) {
+      String erroDetalhe = response.body().contains("message") ? response.body() : "Detalhe não fornecido pela API.";
+      throw new ErroRequisicaoException("Erro na API (Status " + statusCode + "). " + erroDetalhe);
     }
     return lerJson(response);
   }
