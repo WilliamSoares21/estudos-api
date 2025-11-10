@@ -21,6 +21,8 @@ public class App {
       try {
         EnderecoDTO endereco = CepService.fazerRequisicao(cep);
         System.out.println(endereco);
+
+        JsonFileWriter.gravarEnderecoEmJson(endereco);
       } catch (CepNotFoundException e) {
         System.out.println("Erro de busca, o CEP " + cep + " não foi encontrado.");
         System.out.println("Por gentileza, verifique o CEP e tente novamente.");
