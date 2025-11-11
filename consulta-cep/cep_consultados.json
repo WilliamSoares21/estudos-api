@@ -1,0 +1,80 @@
+[
+  {
+    "cep": "45625-970",
+    "logradouro": "Praça Coronel João Souza Leal",
+    "complemento": "12",
+    "bairro": "Centro",
+    "localidade": "Barro Preto",
+    "uf": "BA",
+    "ibge": "2903300",
+    "gia": "",
+    "ddd": "73",
+    "siafi": "3365",
+    "erro": false
+  },
+  {
+    "cep": "35362-971",
+    "logradouro": "Rua da Praia",
+    "complemento": "65",
+    "bairro": "Águas Férreas",
+    "localidade": "São Pedro dos Ferros",
+    "uf": "MG",
+    "ibge": "3164001",
+    "gia": "",
+    "ddd": "33",
+    "siafi": "5279",
+    "erro": false
+  },
+  {
+    "cep": "71980-000",
+    "logradouro": "Quadra QS 11 Conjunto I",
+    "complemento": "",
+    "bairro": "Areal (Águas Claras)",
+    "localidade": "Brasília",
+    "uf": "DF",
+    "ibge": "5300108",
+    "gia": "",
+    "ddd": "61",
+    "siafi": "9701",
+    "erro": false
+  },
+  {
+    "cep": "65081-291",
+    "logradouro": "Rua da Estrela",
+    "complemento": "",
+    "bairro": "Vila Embratel",
+    "localidade": "São Luís",
+    "uf": "MA",
+    "ibge": "2111300",
+    "gia": "",
+    "ddd": "98",
+    "siafi": "0921",
+    "erro": false
+  },
+  {
+    "cep": "68915-970",
+    "logradouro": "Avenida Vereador Chico Maia",
+    "complemento": "388",
+    "bairro": "Centro",
+    "localidade": "Ferreira Gomes",
+    "uf": "AP",
+    "ibge": "1600238",
+    "gia": "",
+    "ddd": "96",
+    "siafi": "0611",
+    "erro": false
+  },
+  {
+    "cep": "77693-970",
+    "logradouro": "Avenida de João Francisco Abreu",
+    "complemento": "s/n",
+    "bairro": "Setor Central",
+    "localidade": "Abreulândia",
+    "uf": "TO",
+    "ibge": "1700251",
+    "gia": "",
+    "ddd": "63",
+    "siafi": "0337",
+    "erro": false
+  }
+]

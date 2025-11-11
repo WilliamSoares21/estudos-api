@@ -1,11 +1,13 @@
 package com.cep;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
   public static void main(String[] args) throws IOException, InterruptedException {
-
+    List<EnderecoDTO> arquivosJson = new ArrayList<>();
     Scanner scan = new Scanner(System.in);
     System.out.println("Seja bem vindo ao verifica CEP");
 
@@ -21,8 +23,7 @@ public class App {
       try {
         EnderecoDTO endereco = CepService.fazerRequisicao(cep);
         System.out.println(endereco);
-
-        JsonFileWriter.gravarEnderecoEmJson(endereco);
+        arquivosJson.add(endereco);
       } catch (CepNotFoundException e) {
         System.out.println("Erro de busca, o CEP " + cep + " não foi encontrado.");
         System.out.println("Por gentileza, verifique o CEP e tente novamente.");
@@ -49,10 +50,17 @@ public class App {
         continue;
       }
       if (opcao == 0) {
-        System.out.println("Encerrando o programa. Até mais!");
+        System.out.println("\nEncerrando o programa. Até mais!");
         break;
       }
     }
+    JsonFileWriter.gravarEnderecoEmJson(arquivosJson);
+    System.out.println("\nCeps consultados");
+    for (EnderecoDTO arquivoJson : arquivosJson) {
+      System.out.println(arquivoJson);
+      System.out.println("\n");
+    }
+    System.out.println("Obrigador por usar o consulta CEO, volte sempre!");
     scan.close();
   }
 }
