@@ -1,13 +1,13 @@
 package com.fipe.tabelaFipe.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Veiculo(
-    @JsonAlias("valor") String valor,
-    @JsonAlias("marca") String marca,
-    @JsonAlias("modelo") String modelo,
-    @JsonAlias("anoModelo") Integer anoModelo,
-    @JsonAlias("combustivel") String combustivel) {
+    @JsonProperty("Valor") String valor,
+    @JsonProperty("Marca") String marca,
+    @JsonProperty("Modelo") String modelo,
+    @JsonProperty("AnoModelo") Integer anoModelo,
+    @JsonProperty("Combustivel") String combustivel){
 }
